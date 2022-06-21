@@ -175,12 +175,11 @@ void loop()
       break;
 
       case THRUSTMASTER:
-        //Thrustmaster, encode POV hat using 4th axis use triggers for X2 (usually rudder)
-        X2_val = (signed(Xbox.getButtonPress(RT)*16) - signed(Xbox.getButtonPress(LT)*16));
+        //Thrustmaster, encode POV hat using 4th axis
         setAnalogJoy (Xbox.getAnalogHat(RightHatX), JOY1_X);
         setAnalogJoy (~Xbox.getAnalogHat(RightHatY), JOY1_Y);
-        setAnalogJoy (X2_val, JOY2_X);
-  
+        setAnalogJoy ((signed(Xbox.getButtonPress(RT)*32) - signed(Xbox.getButtonPress(LT)*32)), JOY2_X); //Used for rudder, convert 10->16 bit
+        
         //Process POV hat
         if (Xbox.getButtonPress(LEFT))
         {

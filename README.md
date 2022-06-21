@@ -11,7 +11,7 @@ BOM:
 
 1x Mini USB Host Shield (based on MAX3421E) - find on eBay/Aliexpress/etc
 
-1x MCP4452-104E digital rheostat
+1x MCP4452-104E digital rheostat (100K, quad channel, I2C)
 
 2x 0603 4.7 kOhm resistor
 
@@ -28,4 +28,19 @@ Various .1" pin header strips
 Modifications:
 
 ![Cut trace here](2.png)
-You should cut the trace on the USB Host Shield between 3.3V and VUSB, and then wire a jumper from RAW to VUSB. This will allow the controller to work with 5V (as per the USB spec) and also bypass the already overloaded regulator on the Arduino. Otherwise assemble the base PCB, then solder the Mini Host Shield with the Arduino into a stack and then solder the stack to the base PCB. Program the Arduino with the code as follows (you will need some USB serial port). If you get build errors, make sure you've installed the USB Host Shield 2.0 library using the Arduino Library manager. Make sure you connect at A6/A7 (these are the two connections not in the parallel headers) between the Arduino and the PCB.
+You should cut the trace on the USB Host Shield between 3.3V and VUSB, and then wire a jumper from RAW to VUSB. This will allow the controller to work with 5V (as per the USB spec) and also bypass the already overloaded regulator on the Arduino. Otherwise assemble the base PCB, then solder the Mini Host Shield with the Arduino into a stack and then solder the stack to the base PCB. Program the Arduino with the code as follows (you will need some USB serial port). If you get build errors, make sure you've installed the USB Host Shield 2.0 library using the Arduino Library manager. Make sure you connect also connected A6/A7 used for I2C (these are the two connections not in the parallel headers) between the Arduino and the PCB.
+
+Additional Usage Instructions (subject to change):
+Holding down menu for 3 seconds switches modes. Here are the currently supported modes:
+
+Standard 4 axis 4 button (mode 1)
+Triggers and Buttons overloaded to A/B/X/Y
+
+Thrustmaster emulation (mode 2)
+Triggers are used for analog rudder X2 (Left/Right relative). Y2 is used for POV hat, multiple simultanous button presses are allowed. Note, I don't know the correct resistance values, can someone who owns Thrustmaster measure?
+
+
+CH Flightstick emulation (mode 3)
+Triggers are used for analog rudder X2 (Left/Right relative), left stick is used for throttle (up/down). Buttons chords are used for POV hat (digital). Multiple simultanous button pressed not allowed.
+
+Current design remembers last mode using EEPROM and will power up with last used mode.
